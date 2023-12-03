@@ -6,15 +6,14 @@ pygame.init()
 # Get user inputs for game settings
 WIDTH = int(input("Enter the width of the window: "))
 HEIGHT = int(input("Enter the height of the window: "))
-FPS = 120
+FPS = 60
 
 WHITE = (255, 255, 255)
 RED = (255, 0, 0)
 GREEN = (0, 255, 0)
 GRAY = (128, 128, 128)
 
-GRID_SIZE = 30  # Adjust this value as needed
-
+GRID_SIZE = 30
 grid_width = WIDTH // GRID_SIZE
 grid_height = HEIGHT // GRID_SIZE
 grid = [[0] * grid_width for _ in range(grid_height)]
@@ -45,7 +44,8 @@ while editing:
             elif end_pos is None and (col, row) != start_pos:
                 end_pos = (col, row)
             else:
-                grid[row][col] = 1 - grid[row][col]  # Toggle obstacle
+                grid[row][col] = 1 - grid[row][col]
+
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE and start_pos is not None and end_pos is not None:
                 editing = False
@@ -69,15 +69,20 @@ while editing:
         end_text = font.render("Click to set end position", True, (0, 0, 0))
         screen.blit(end_text, (10, 40))
 
-    edit_text = font.render("Click anywhere else to create obstacles and press SPACE to start simulation", True, (0, 0, 0))
+    edit_text = font.render("Click anywhere else to create obstacles", True, (0, 0, 0))
     screen.blit(edit_text, (10, 70))
+
+    game_text = font.render("Press SPACE to start simulation", True, (0, 0, 0))
+    screen.blit(game_text, (10, 100))
 
     pygame.display.flip()
 
 running = True
 block_x, block_y = start_pos[0] * GRID_SIZE, start_pos[1] * GRID_SIZE
 target_x, target_y = end_pos
-block_speed = 2
+block_speed = 1
+counter = 0
+movement_speed = 0.1
 path = []
 
 while running:
@@ -85,26 +90,25 @@ while running:
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
-
-        # Obstacle editing during the running phase
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
             x, y = pygame.mouse.get_pos()
             col = x // GRID_SIZE
             row = y // GRID_SIZE
-            grid[row][col] = 1 - grid[row][col]  # Toggle obstacle
+            grid[row][col] = 1 - grid[row][col]
 
-    if block_x < target_x * GRID_SIZE:
-        block_x += block_speed
-    elif block_y < target_y * GRID_SIZE:
-        block_y += block_speed
+    if block_x == target_x * GRID_SIZE and block_y == target_y * GRID_SIZE:
+        running = False
 
-    row = block_y // GRID_SIZE
-    col = block_x // GRID_SIZE
-    if grid[row][col] == 1:
-        if block_x < target_x * GRID_SIZE:
-            block_x += block_speed
-        elif block_y < target_y * GRID_SIZE:
-            block_y += block_speed
+    for dx, dy in [(0, 1), (1, 0), (0, -1), (-1, 0)]:
+        next_x, next_y = block_x + dx * block_speed * GRID_SIZE, block_y + dy * block_speed * GRID_SIZE
+        next_col, next_row = next_x // GRID_SIZE, next_y // GRID_SIZE
+
+        if 0 <= next_col < grid_width and 0 <= next_row < grid_height and not grid[next_row][next_col]:
+            counter += movement_speed
+            if counter >= 1:
+                block_x, block_y = next_x, next_y
+                counter = 0
+            break
 
     path.append((block_x, block_y))
 
