@@ -3,8 +3,9 @@ import os
 import pygame
 import heapq
 
-SLOT_SIZE = 24
+SLOT_SIZE = 35
 WIDTH = 1980
+HEIGHT = 1080
 ROWS = WIDTH // SLOT_SIZE
 
 FLASH_ASSET_PATH = os.path.join(os.path.dirname(__file__), "flash_asset.png")
@@ -16,7 +17,7 @@ FLASH_IMAGE = pygame.transform.scale(FLASH_IMAGE, (SLOT_SIZE, SLOT_SIZE))
 FLASH_STILL_IMAGE = pygame.image.load(FLASH_STILL_ASSET_PATH)
 FLASH_STILL_IMAGE = pygame.transform.scale(FLASH_STILL_IMAGE, (SLOT_SIZE, SLOT_SIZE))
 
-WIN = pygame.display.set_mode((WIDTH, 1080))
+WIN = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("DFS Path Finding Algorithm")
 
 RED = (255, 0, 0)
@@ -112,6 +113,7 @@ def reconstruct_path(came_from, current, draw):
         if current:
             current.make_path()
             draw()
+            pygame.time.Clock().tick(60)
 
 
 def make_grid(rows):
@@ -311,7 +313,9 @@ def main(win):
     started = False
 
     while run:
+
         draw(win, grid, algorithm_choice)
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
