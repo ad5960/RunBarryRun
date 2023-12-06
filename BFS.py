@@ -362,9 +362,7 @@ def main(win):
                     elif algorithm_choice == 4:
                         dijkstra(lambda: draw(win, grid, algorithm_choice), grid, start, end)
                 elif event.key == pygame.K_ESCAPE:
-                    for row in grid:
-                        for spot in row:
-                            spot.reset()
+                    main(WIN)
                     start = end = None
                 elif event.key == pygame.K_1:
                     algorithm_choice = 1
@@ -378,4 +376,5 @@ def main(win):
     pygame.quit()
 
 
-main(WIN)
+if __name__ == "__main__":
+    main(WIN)
