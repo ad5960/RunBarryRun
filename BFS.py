@@ -11,6 +11,9 @@ COLUMNS = HEIGHT // SLOT_SIZE
 
 FLASH_ASSET_PATH = os.path.join(os.path.dirname(__file__), "flash_asset.png")
 FLASH_STILL_ASSET_PATH = os.path.join(os.path.dirname(__file__), "flash_still.png")
+OBSTACLE_ASSET_PATH = os.path.join(os.path.dirname(__file__), "obstacle.png")
+FINISH_STILL_ASSET_PATH = os.path.join(os.path.dirname(__file__), "finish.png")
+SEARCH_ASSET_PATH = os.path.join(os.path.dirname(__file__), "wavesound.png")
 
 FLASH_IMAGE = pygame.image.load(FLASH_ASSET_PATH)
 FLASH_IMAGE = pygame.transform.scale(FLASH_IMAGE, (SLOT_SIZE, SLOT_SIZE))
@@ -18,8 +21,17 @@ FLASH_IMAGE = pygame.transform.scale(FLASH_IMAGE, (SLOT_SIZE, SLOT_SIZE))
 FLASH_STILL_IMAGE = pygame.image.load(FLASH_STILL_ASSET_PATH)
 FLASH_STILL_IMAGE = pygame.transform.scale(FLASH_STILL_IMAGE, (SLOT_SIZE, SLOT_SIZE))
 
+OBSTACLE_STILL_IMAGE = pygame.image.load(OBSTACLE_ASSET_PATH)
+OBSTACLE_STILL_IMAGE = pygame.transform.scale(OBSTACLE_STILL_IMAGE, (SLOT_SIZE, SLOT_SIZE))
+
+FINISH_STILL_IMAGE = pygame.image.load(FINISH_STILL_ASSET_PATH)
+FINISH_STILL_IMAGE = pygame.transform.scale(FINISH_STILL_IMAGE, (SLOT_SIZE, SLOT_SIZE))
+
+SEARCH_STILL_IMAGE = pygame.image.load(SEARCH_ASSET_PATH)
+SEARCH_STILL_IMAGE = pygame.transform.scale(SEARCH_STILL_IMAGE, (SLOT_SIZE, SLOT_SIZE))
+
 WIN = pygame.display.set_mode((WIDTH, HEIGHT))
-pygame.display.set_caption("DFS Path Finding Algorithm")
+pygame.display.set_caption("CS664 Project - Run Barry Run")
 
 RED = (255, 0, 0)
 GREEN = (0, 255, 0)
@@ -67,15 +79,18 @@ class Spot:
 
     def make_closed(self):
         self.color = GREY
+        self.image = SEARCH_STILL_IMAGE
 
     def make_open(self):
-        self.color = GREEN
+        self.color = WHITE
 
     def make_barrier(self):
         self.color = BLACK
+        self.image = OBSTACLE_STILL_IMAGE
 
     def make_end(self):
         self.color = TURQUOISE
+        self.image = FINISH_STILL_IMAGE
 
     def make_path(self):
         self.color = PURPLE
