@@ -305,7 +305,7 @@ def draw_menu(win, algorithm_chosen):
 
 def main(win):
     pygame.font.init()
-    grid = make_grid(ROWS, COLUMNS)
+    grid = make_grid(ROWS + 1, COLUMNS + 1)
 
     start = None
     end = None
