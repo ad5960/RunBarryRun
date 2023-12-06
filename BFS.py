@@ -7,6 +7,7 @@ SLOT_SIZE = 35
 WIDTH = 1980
 HEIGHT = 1080
 ROWS = WIDTH // SLOT_SIZE
+COLUMNS = HEIGHT // SLOT_SIZE
 
 FLASH_ASSET_PATH = os.path.join(os.path.dirname(__file__), "flash_asset.png")
 FLASH_STILL_ASSET_PATH = os.path.join(os.path.dirname(__file__), "flash_still.png")
@@ -33,7 +34,7 @@ TURQUOISE = (64, 224, 208)
 
 
 class Spot:
-    def __init__(self, row, col, total_rows):
+    def __init__(self, row, col, total_rows, total_columns):
         self.row = row
         self.col = col
         self.x = row * SLOT_SIZE
@@ -41,6 +42,7 @@ class Spot:
         self.color = WHITE
         self.neighbors = []
         self.total_rows = total_rows
+        self.total_columns = total_columns
 
     def get_pos(self):
         return self.row, self.col
@@ -97,7 +99,7 @@ class Spot:
         if self.row > 0 and not grid[self.row - 1][self.col].is_barrier():
             self.neighbors.append(grid[self.row - 1][self.col])
 
-        if self.col < self.total_rows - 1 and not grid[self.row][self.col + 1].is_barrier():
+        if self.col < self.total_columns - 1 and not grid[self.row][self.col + 1].is_barrier():
             self.neighbors.append(grid[self.row][self.col + 1])
 
         if self.col > 0 and not grid[self.row][self.col - 1].is_barrier():
@@ -116,12 +118,12 @@ def reconstruct_path(came_from, current, draw):
             pygame.time.Clock().tick(60)
 
 
-def make_grid(rows):
+def make_grid(rows, columns):
     grid = []
     for i in range(rows):
         grid.append([])
-        for j in range(rows):
-            spot = Spot(i, j, rows)
+        for j in range(columns):
+            spot = Spot(i, j, rows, columns)
             grid[i].append(spot)
     return grid
 
@@ -303,7 +305,7 @@ def draw_menu(win, algorithm_chosen):
 
 def main(win):
     pygame.font.init()
-    grid = make_grid(ROWS)
+    grid = make_grid(ROWS, COLUMNS)
 
     start = None
     end = None
