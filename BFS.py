@@ -58,13 +58,17 @@ def bfs(start, end, obstacles):
         if current == end:
             return path
 
-        for dx, dy in [(0, -1), (0, 1), (-1, 0), (1, 0)]:
+        # Explore all eight possible directions
+        for dx, dy in [(0, -1), (0, 1), (-1, 0), (1, 0), (-1, -1), (-1, 1), (1, -1), (1, 1)]:
             next_pos = (current[0] + dx, current[1] + dy)
+
+            # Check if the next position is within the grid, not visited, and not an obstacle
             if 0 <= next_pos[0] < num_cells and 0 <= next_pos[1] < num_cells and next_pos not in visited and next_pos not in obstacles:
                 visited.add(next_pos)
                 queue.append((next_pos, path + [next_pos]))
 
     return []
+
 
 # Main game loop
 running = True
