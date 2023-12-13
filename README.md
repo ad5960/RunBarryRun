@@ -13,7 +13,7 @@ Users can place a source point (which in our case is the character Flash – Bar
 2.	Run the python app using `python app.py`
 3.	This will start a new pygame window
 
-Navigating through the project
+##### Navigating through the project
 4.	Use your mouse click to add objects on the grid. 
   a.	First mouse click will add the Flash character on the gird (this will be your source)
   b.	Second mouse click will add the Goal on the grid (this will be your destination)
