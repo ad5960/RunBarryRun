@@ -15,9 +15,9 @@ Users can place a source point (which in our case is the character Flash – Bar
 
 Navigating through the project
 4.	Use your mouse click to add objects on the grid. 
-a.	First mouse click will add the Flash character on the gird (this will be your source)
-b.	Second mouse click will add the Goal on the grid (this will be your destination)
-c.	Now you can click and drag your mouse across the grid to create obstacles
+  a.	First mouse click will add the Flash character on the gird (this will be your source)
+  b.	Second mouse click will add the Goal on the grid (this will be your destination)
+  c.	Now you can click and drag your mouse across the grid to create obstacles
 5.	Once you’re satisfied with the grid and the objects, click on either 1, 2, 3, 4 to choose your pathfinding algorithm of choice (1 = DFS, 2 = BFS, 3 = A* Algorithm, 4 = Dijkstra’s Algorithm)
 6.	Click Space to start the visualization
 
